@@ -1,0 +1,168 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "IJVM",
+	"patterns": [
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#method"
+		},
+		{
+			"include": "#descriptor"
+		},
+		{
+			"include": "#mnemonic"
+		},
+		{
+			"include": "#label"
+		},
+		{
+			"include": "#number"
+		},
+		{
+			"include": "#operator"
+		}
+	],
+	"repository": {
+		"comment": {
+			"patterns": [{
+				"name": "comment.line",
+				"match": "//.*$"
+			}]
+		},
+		"method": {
+			"patterns": [{
+				"match": "(?:^|\\s)(\\.method)\\s+(\\b(\\w+)\\b)\\S*\\n?\\r?",
+				"captures": {
+					"1": {
+						"name": "keyword.control"
+					},
+					"2": {
+						"name": "entity.name.function"
+					}
+				}
+			}]
+		},
+		"descriptor": {
+			"patterns": [{
+				"match": "((\\.\\b(args|locals)\\b)\\s+(.+)|(\\.define)\\s+(\\w+)\\s+=\\s+(.+))",
+				"captures": {
+					"2": {
+						"name": "keyword.control"
+					},
+					"4": {
+						"patterns": [{
+							"include": "#expression"
+						}]
+					},
+					"5": {
+						"name": "keyword.control"
+					},
+					"6": {
+						"name": "entity.name.class"
+					},
+					"7": {
+						"patterns": [{
+							"include": "#expression"
+						}]
+					}
+				}
+			}]
+		},
+		"mnemonic": {
+			"patterns": [{
+				"match": "(?i)\\b((bipush|dup|iadd|iand|ior|ireturn|isub|nop|pop|swap)|((goto|ifeq|iflt|if_icmpeq|invokevirtual)(?:\\s+)(\\b(\\w+)\\b)(?:\\S*\\n?\\r?)))\\b|((iinc)(?:\\s+)([^,]+)(?:\\,)([^,]+)(?:\\s*[\\n\\r]?))|((iload|istore|ldc_w)(?:\\s+)(.+)(?:\\s*[\\n\\r]?))",
+				"captures": {
+					"2": {
+						"name": "entity.name.function"
+					},
+					"4": {
+						"name": "entity.name.function"
+					},
+					"5": {
+						"name": "entity.name.class"
+					},
+					"8": {
+						"name": "entity.name.function"
+					},
+					"9": {
+						"patterns": [{
+							"include": "#expression"
+						}]
+					},
+					"10": {
+						"patterns": [{
+							"include": "#expression"
+						}]
+					},
+					"12": {
+						"name": "entity.name.function"
+					},
+					"13": {
+						"patterns": [{
+							"include": "#expression"
+						}]
+					}
+				}
+			}]
+		},
+		"label": {
+			"patterns": [{
+				"name": "entity.name.class",
+				"match": "^(\\s*\\S+):"
+			}]
+		},
+		"number": {
+			"patterns": [{
+				"name": "constant.numeric",
+				"match": "\\d+"
+			}]
+		},
+		"operator": {
+			"patterns": [{
+				"match": "(=)|(\\+|\\-)",
+				"captures": {
+					"1": {
+						"name": "keyword.operator.assignment"
+					},
+					"2": {
+						"name": "keyword.operator.arithmetic"
+					}
+				}
+			}]
+		},
+		"expression": {
+			"patterns": [{
+				"match": "(\\b(\\w+)\\b|(?:\\()(.+)(?:\\)))(?:\\s*\\[\\+\\-]\\s*)(\\b(\\w+)\\b|(?:\\()(.+)(?:\\)))|(?:\\s*\\()(.+)(?:\\)\\s*)|(\\w+)",
+				"captures": {
+					"2": {
+						"name": "entity.name.class"
+					},
+					"3": {
+						"patterns": [{
+							"include": "#expression"
+						}] 
+					},
+					"5": {
+						"name": "entity.name.class"
+					},
+					"6": {
+						"patterns": [{
+							"include": "#expression"
+						}] 
+					},
+					"7": {
+						"patterns": [{
+							"include": "#expression"
+						}] 
+					},
+					"8": {
+						"name": "entity.name.class"
+					}
+				}
+			}]
+		}
+	},
+	"scopeName": "source.j"
+}
