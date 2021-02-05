@@ -43,11 +43,7 @@ connection.onInitialize((params: InitializeParams) => {
   hasConfigurationCapability = !!(capabilities.workspace && !!capabilities.workspace.configuration);
   hasWorkspaceFolderCapability = !!(capabilities.workspace && !!capabilities.workspace.workspaceFolders);
   hasDiagnosticRelatedInformationCapability = !!(capabilities.textDocument && capabilities.textDocument.publishDiagnostics && capabilities.textDocument.publishDiagnostics.relatedInformation);
-  connection.console.log(
-    `${hasConfigurationCapability}, ` +
-    `${hasWorkspaceFolderCapability}, ` +
-    `${hasDiagnosticRelatedInformationCapability}`
-  );
+
   const result: InitializeResult = {
     capabilities: {
       textDocumentSync: TextDocumentSyncKind.Incremental,
@@ -164,7 +160,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 }
 
 connection.onDidChangeWatchedFiles(_change => {
-	connection.console.log('We received an file change event');
+	
 });
 
 connection.onCompletion(
