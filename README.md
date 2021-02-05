@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 # ijvm-vscode
 
 Syntax highlighting for the ijvm language.
 
-\!\[reference\]\(images/reference.png\)
-=======
-# ijvm-vscode
->>>>>>> d75ada5 (Initial commit)
+<img src=https://raw.githubusercontent.com/martinkors/ijvm-vscode/master/images/reference.png width=734 height=413>
