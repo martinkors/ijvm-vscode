@@ -137,20 +137,20 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 		};
 		if (hasDiagnosticRelatedInformationCapability) {
 			diagnostic.relatedInformation = [
-				{
-					location: {
-						uri: textDocument.uri,
-						range: Object.assign({}, diagnostic.range)
-					},
-					message: 'Spelling matters'
-				},
-				{
-					location: {
-						uri: textDocument.uri,
-						range: Object.assign({}, diagnostic.range)
-					},
-					message: 'Particularly for names'
-				}
+				// {
+				// 	location: {
+				// 		uri: textDocument.uri,
+				// 		range: Object.assign({}, diagnostic.range)
+				// 	},
+				// 	message: 'Spelling matters'
+				// },
+				// {
+				// 	location: {
+				// 		uri: textDocument.uri,
+				// 		range: Object.assign({}, diagnostic.range)
+				// 	},
+				// 	message: 'Particularly for names'
+				// }
 			];
 		}
 		diagnostics.push(diagnostic);
