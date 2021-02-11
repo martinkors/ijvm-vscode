@@ -46,7 +46,7 @@
 		},
 		"descriptor": {
 			"patterns": [{
-				"match": "((\\.\\b(args|locals)\\b)\\s+(.+)|(\\.define)\\s+(\\w+)\\s+=\\s+(.+))",
+				"match": "((\\.\\b(args|locals)\\b)\\s+([^/]+)|(\\.define)\\s+(\\w+)\\s+=\\s+([^/]+))",
 				"captures": {
 					"2": {
 						"name": "keyword.control"
@@ -72,7 +72,7 @@
 		},
 		"mnemonic": {
 			"patterns": [{
-				"match": "(?i)\\b((bipush|dup|iadd|iand|ior|ireturn|isub|nop|pop|swap)|((goto|ifeq|iflt|if_icmpeq|invokevirtual)(?:\\s+)(\\b(\\w+)\\b)(?:\\S*\\n?\\r?)))\\b|((iinc)(?:\\s+)([^,]+)(?:\\,)([^,]+)(?:\\s*[\\n\\r]?))|((iload|istore|ldc_w)(?:\\s+)(.+)(?:\\s*[\\n\\r]?))",
+				"match": "(?i)\\b((bipush|dup|iadd|iand|ior|ireturn|isub|nop|pop|swap)|((goto|ifeq|iflt|if_icmpeq|invokevirtual)(?:\\s+)(\\b(\\w+)\\b)(?:\\S*\\n?\\r?)))\\b|((iinc)(?:\\s+)([^,]+)(?:\\,)([^,/]+))|((iload|istore|ldc_w)(?:\\s+)([^/]+))",
 				"captures": {
 					"2": {
 						"name": "entity.name.function"
