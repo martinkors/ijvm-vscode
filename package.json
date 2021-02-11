@@ -2,7 +2,7 @@
   "name": "ijvm-vscode",
   "displayName": "ijvm vscode",
   "description": "A syntax highlighter and linter for the ijvm language.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "martinkors",
   "publisher": "martinkors",
   "license": "GPL-3.0-or-later",
@@ -64,7 +64,8 @@
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-    "test": "sh ./scripts/e2e.sh"
+    "test": "sh ./scripts/e2e.sh",
+    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/mocha": "^8.2.0",
