@@ -290,7 +290,7 @@ connection.onCompletion(
 			{
 				label: '.define',
 				kind: CompletionItemKind.Function,
-        data: 22,
+        data: 23,
         textEdit: TextEdit.replace(getCompletionRange(params.textDocument.uri, params.position), '.define')
 			}
 		];

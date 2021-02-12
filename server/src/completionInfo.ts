@@ -44,6 +44,10 @@ export const ijvmInfo: IEntry[] = [
     description: 'Pop two words from stack; push their sum'
   },
   {
+    instruction: 'iand',
+    description: 'Pop two words from stack; push Boolean AND'
+  },
+  {
     instruction: 'ifeq',
     argumentTypes: [
       ArgumentType.LABEL
