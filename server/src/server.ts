@@ -20,7 +20,8 @@ import {
   Range,
   TextDocumentEdit,
   TextEdit,
-  Position
+  Position,
+	MarkupKind
 } from 'vscode-languageserver/node';
 
 import {
@@ -28,6 +29,7 @@ import {
 } from 'vscode-languageserver-textdocument';
 import { promises, unwatchFile } from 'fs';
 import { version } from 'os';
+import { IEntry, ijvmInfo } from './completionInfo';
 
 let connection : Connection = createConnection(ProposedFeatures.all);
 
@@ -170,95 +172,100 @@ connection.onCompletion(
 			{
 				label: 'bipush',
 				kind: CompletionItemKind.Function,
-        data: 1
+        data: 0
 			},
 			{
 				label: 'dup',
 				kind: CompletionItemKind.Function,
-				data: 2
+				data: 1
 			},
 			{
 				label: 'goto',
 				kind: CompletionItemKind.Function,
-				data: 3
+				data: 2
 			},
 			{
 				label: 'iadd',
 				kind: CompletionItemKind.Function,
-				data: 4
+				data: 3
 			},
 			{
 				label: 'iand',
 				kind: CompletionItemKind.Function,
-				data: 5
+				data: 4
 			},
 			{
 				label: 'ifeq',
 				kind: CompletionItemKind.Function,
-				data: 6
+				data: 5
 			},
 			{
 				label: 'iflt',
 				kind: CompletionItemKind.Function,
-				data: 7
+				data: 6
 			},
 			{
 				label: 'if_icmpeq',
 				kind: CompletionItemKind.Function,
-				data: 8
+				data: 7
 			},
 			{
 				label: 'iinc',
 				kind: CompletionItemKind.Function,
-				data: 9
+				data: 8
 			},
 			{
 				label: 'iload',
 				kind: CompletionItemKind.Function,
-				data: 10
+				data: 9
 			},
 			{
 				label: 'invokevirtual',
 				kind: CompletionItemKind.Function,
-				data: 11
+				data: 10
 			},
 			{
 				label: 'ior',
 				kind: CompletionItemKind.Function,
-				data: 12
+				data: 11
 			},
 			{
 				label: 'ireturn',
 				kind: CompletionItemKind.Function,
-				data: 13
+				data: 12
 			},
 			{
 				label: 'istore',
 				kind: CompletionItemKind.Function,
-				data: 14
+				data: 13
 			},
 			{
 				label: 'isub',
 				kind: CompletionItemKind.Function,
-				data: 15
+				data: 14
 			},
 			{
 				label: 'ldc_w',
 				kind: CompletionItemKind.Function,
-				data: 16
+				data: 15
 			},
 			{
 				label: 'nop',
 				kind: CompletionItemKind.Function,
-				data: 17
+				data: 16
 			},
 			{
 				label: 'pop',
 				kind: CompletionItemKind.Function,
-				data: 18
+				data: 17
 			},
 			{
 				label: 'swap',
+				kind: CompletionItemKind.Function,
+				data: 18
+			},
+			{
+				label: 'wide',
 				kind: CompletionItemKind.Function,
 				data: 19
 			},
@@ -283,7 +290,7 @@ connection.onCompletion(
 			{
 				label: '.define',
 				kind: CompletionItemKind.Function,
-        data: 23,
+        data: 22,
         textEdit: TextEdit.replace(getCompletionRange(params.textDocument.uri, params.position), '.define')
 			}
 		];
@@ -303,15 +310,31 @@ function getCompletionRange(documentUri: string, caretPosition: Position): Range
   return Range.create(-1, -1, -1, -1);
 }
 
+function generateInfo(item: CompletionItem, entry: IEntry) {
+	if (entry.argumentTypes != undefined && entry.examples != undefined) {
+		item.detail = `${entry.instruction} ${entry.argumentTypes.join(' ')}`;
+		let doc = `${entry.description}\n\nExample${entry.examples.length > 1 ? 's' : ''}:`;
+		for (let x in entry.examples) {
+			doc += `\n\n\`${entry.instruction} ${x}\``;
+		}
+		item.documentation = {
+			kind: MarkupKind.Markdown,
+			value: doc
+		};
+	}
+	else {
+		item.detail = `${entry.instruction}`;
+		let doc = `${entry.description}`;
+		item.documentation = {
+			kind: MarkupKind.Markdown,
+			value: doc
+		};
+	}
+}
+
 connection.onCompletionResolve(
 	(item: CompletionItem): CompletionItem => {
-		// if (item.data === 1) {
-		// 	item.detail = 'ldc_w';
-		// 	item.documentation = 'ldc_w doc';
-		// } else if (item.data === 2) {
-		// 	item.detail = 'iadd';
-		// 	item.documentation = 'iadd doc';
-		// }
+		generateInfo(item, ijvmInfo[item.data]);
 		return item;
 	}
 );

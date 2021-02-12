@@ -1,6 +1,8 @@
 import * as path from 'path'
 import { DEFAULT_MAX_VERSION } from 'tls';
+import * as vscode from 'vscode'
 import { workspace, ExtensionContext } from 'vscode'
+// import IJVMCompletionItemProvider from './completionProvider'
 
 import {
   LanguageClient,

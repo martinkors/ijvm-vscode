@@ -23,7 +23,7 @@
   pop // this is a comment
   swap // this is a comment
 
-test: // this is a comment
+LOOP: // this is a comment
   test: // this is a comment
 
 ldc_w 1
