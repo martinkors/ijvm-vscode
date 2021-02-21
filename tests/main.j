@@ -36,7 +36,7 @@
 	bipush 82
 	ior
 	bipush 35
-(([^/\\d][^/]*)|(0x[0-9a-fA-F]+|\\d+))
+
 back:
 	istore 12
 	Istore 1234

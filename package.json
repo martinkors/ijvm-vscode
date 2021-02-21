@@ -6,6 +6,7 @@
   "author": "martinkors",
   "publisher": "martinkors",
   "license": "GPL-3.0-or-later",
+  "icon": "./images/ijvm.png",
   "engines": {
     "vscode": "^1.52.0",
     "node": "*"
