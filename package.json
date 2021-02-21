@@ -2,7 +2,7 @@
   "name": "ijvm-vscode",
   "displayName": "ijvm vscode",
   "description": "A syntax highlighter and linter for the ijvm language.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "martinkors",
   "publisher": "martinkors",
   "license": "GPL-3.0-or-later",
