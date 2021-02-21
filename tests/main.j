@@ -1,33 +1,106 @@
-.method main // this is a comment
-.args 3 // this is a comment
-.locals 2 // this is a comment
-.define x = 1 // this is a comment
- // this is a comment
-  bipush 101 // this is a comment
-  dup // this is a comment
-  goto test // this is a comment
-  iadd // this is a comment
-  iand // this is a comment
-  ifeq test // this is a comment
-  iflt test // this is a comment
-  if_icmpeq test // this is a comment
-  iinc (x - x), x   // this is a comment
-  iload x // this is a comment
-  invokevirtual test // this is a comment
-  ior // this is a comment
-  ireturn // this is a comment
-  istore x // this is a comment
-  isub // this is a comment
-  ldc_w 10 // this is a comment
-  nop // this is a comment
-  pop // this is a comment
-  swap // this is a comment
+// Program to test the assembler
+// Tests each instruction with a representative from each input class,
+// ie. positiv and negative numbers, 0 and max and min values.
 
-LOOP: // this is a comment
-  test: // this is a comment
+.Method main
+.Args 1
+.Locals 0x00
+.Define a1 = 0x000
+	Bipush 12
+	Bipush 0
+	bipush -7
+	bipush 127
+	bipush -128
+	Dup
+	Pop
+	pop
+	Iadd
+	Swap
+	pop
+	iand
+	pop
+	Iinc 1, 2
+	iinc 2, -2
+	iinc 1, -128
+	iinc 1, 127
+	Iload 0
+	iload 12
+	iload -2
+	pop
+	pop            // Note: the value read from LV (local 0) is
+                       // stored back into LV.
+	istore 0
 
-ldc_w 1
-ldc_w a
-ldc_w 1 + x
-ldc_w 1 - x
-ldc_w (1 + x) - 1
+	bipush 13
+	bipush 56
+	bipush 82
+	ior
+	bipush 35
+(([^/\\d][^/]*)|(0x[0-9a-fA-F]+|\\d+))
+back:
+	istore 12
+	Istore 1234
+	isub
+	ldc_w 0
+	ldc_w 1234
+	Ldc_w -4124
+	nop
+	pop
+	pop
+	pop
+	pop
+
+	Goto next1
+	nop
+next1:
+	bipush 0
+	Ifeq next2
+	ior
+next2:
+	bipush 5
+	ifeq loop
+	bipush 27
+	iflt loop
+	bipush 0
+	iflt loop
+	bipush -5
+	iflt next3
+	istore 0
+next3:
+	bipush 5
+	bipush 7
+	if_icmpeq loop
+	bipush -8
+	bipush -8
+	if_icmpeq next4
+	goto next3
+next4:
+	ireturn
+
+loop:
+	goto loop
+
+// The following jumps check that negative, positive and zero offsets
+// are emitted correctly.  They aren't meant to be excecuted.
+
+	goto back
+	goto forward
+goto_label:
+	goto goto_label
+
+	ifeq back
+	ifeq forward
+ifeq_label:
+	ifeq ifeq_label
+	
+	iflt back
+	iflt forward
+iflt_label:
+	iflt iflt_label
+	
+	if_icmpeq back
+	if_icmpeq forward
+3if_icmpeq_label:
+	if_icmpeq if_icmpeq_label
+
+3forward:

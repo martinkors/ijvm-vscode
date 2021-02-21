@@ -33,7 +33,7 @@
 		},
 		"method": {
 			"patterns": [{
-				"match": "(?:^|\\s)(\\.method)\\s+(\\b(\\w+)\\b)\\S*\\n?\\r?",
+				"match": "(?i)(?:^|\\s)(\\.\\bmethod\\b)\\s+(\\b(\\w+)\\b)\\S*\\n?\\r?",
 				"captures": {
 					"1": {
 						"name": "keyword.control"
@@ -46,33 +46,45 @@
 		},
 		"descriptor": {
 			"patterns": [{
-				"match": "((\\.\\b(args|locals)\\b)\\s+([^/]+)|(\\.define)\\s+(\\w+)\\s+=\\s+([^/]+))",
+				"match": "(?i)((\\.\\b(args|locals)\\b)\\s+(([^/\\-\\+\\d][^\\-\\+/]*)|(\\-)?(0x[0-9a-fA-F]+|\\d+))|(\\.define)\\s+(\\w+)\\s+=\\s+(([^/\\-\\+\\d][^\\-\\+/]*)|(\\-)?(0x[0-9a-fA-F]+|\\d+)))",
 				"captures": {
 					"2": {
 						"name": "keyword.control"
 					},
-					"4": {
+					"5": {
 						"patterns": [{
 							"include": "#expression"
 						}]
-					},
-					"5": {
-						"name": "keyword.control"
 					},
 					"6": {
-						"name": "entity.name.class"
+						"name": "keyword.operator.arithmetic"
 					},
 					"7": {
+						"name": "constant.numeric"
+					},
+					"8": {
+						"name": "keyword.control"
+					},
+					"9": {
+						"name": "entity.name.class"
+					},
+					"11": {
 						"patterns": [{
 							"include": "#expression"
 						}]
+					},
+					"12": {
+						"name": "keyword.operator.arithmetic"
+					},
+					"13": {
+						"name": "constant.numeric"
 					}
 				}
 			}]
 		},
 		"mnemonic": {
 			"patterns": [{
-				"match": "(?i)\\b((bipush|dup|iadd|iand|ior|ireturn|isub|nop|pop|swap)|((goto|ifeq|iflt|if_icmpeq|invokevirtual)(?:\\s+)(\\b(\\w+)\\b)(?:\\S*\\n?\\r?)))\\b|((iinc)(?:\\s+)([^,]+)(?:\\,)([^,/]+))|((iload|istore|ldc_w)(?:\\s+)([^/]+))",
+				"match": "(?i)\\b((bipush|dup|iadd|iand|ior|ireturn|isub|nop|pop|swap)|((goto|ifeq|iflt|if_icmpeq|invokevirtual)(?:\\s+)(\\b([^\\d\\s]\\w*)\\b)(?:\\S*\\n?\\r?)))\\b|((iinc)(?:\\s+)(([^/\\,\\-\\+\\d][^\\,\\-\\+/]*)|(\\-)?(0x[0-9a-fA-F]+|\\d+))(?:\\,\\s+)(([^/\\,\\-\\+\\d][^\\,\\-\\+/]*)|(\\-)?(0x[0-9a-fA-F]+|\\d+)))|((iload|istore|ldc_w)(?:\\s+)(([^/\\-\\+\\d][^\\-\\+/]*)|(\\-)?(0x[0-9a-fA-F]+|\\d+)))",
 				"captures": {
 					"2": {
 						"name": "entity.name.function"
@@ -86,23 +98,41 @@
 					"8": {
 						"name": "entity.name.function"
 					},
-					"9": {
-						"patterns": [{
-							"include": "#expression"
-						}]
-					},
 					"10": {
 						"patterns": [{
 							"include": "#expression"
 						}]
 					},
-					"12": {
-						"name": "entity.name.function"
+					"11": {
+						"name": "keyword.operator.arithmetic"
 					},
-					"13": {
+					"12": {
+						"name": "constant.numeric"
+					},
+					"14": {
 						"patterns": [{
 							"include": "#expression"
 						}]
+					},
+					"15": {
+						"name": "keyword.operator.arithmetic"
+					},
+					"16": {
+						"name": "constant.numeric"
+					},
+					"17": {
+						"name": "entity.name.function"
+					},
+					"20": {
+						"patterns": [{
+							"include": "#expression"
+						}]
+					},
+					"21": {
+						"name": "keyword.operator.arithmetic"
+					},
+					"22": {
+						"name": "constant.numeric"
 					}
 				}
 			}]
@@ -110,13 +140,16 @@
 		"label": {
 			"patterns": [{
 				"name": "entity.name.class",
-				"match": "^(\\s*\\S+):"
+				"match": "^(\\s*[^\\d\\s]\\S*):"
 			}]
 		},
 		"number": {
 			"patterns": [{
 				"name": "constant.numeric",
 				"match": "\\d+"
+			}, {
+				"name": "constant.numeric",
+				"match": "0x[0-9a-fA-F]+"
 			}]
 		},
 		"operator": {
